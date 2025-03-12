@@ -43,6 +43,8 @@ public class AgendaViewController implements Initializable
     private TextField textFieldApellidos;
     @FXML
     private AnchorPane rootAgendaView;
+    //@FXML
+    //private
 
     public void setDataUtil(DataUtil dataUtil){
         this.dataUtil=dataUtil;

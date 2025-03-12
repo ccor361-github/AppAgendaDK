@@ -25,8 +25,7 @@ import java.time.ZonedDateTime;
 import java.util.Date;
 import java.util.Optional;
 
-public class PersonaDetalleViewController
-{
+public class PersonaDetalleViewController {
     public static final char CASADO='c';
     public static final char SOLTERO='s';
     public static final char VIUDO='v';
@@ -35,7 +34,6 @@ public class PersonaDetalleViewController
 
     @FXML
     public ImageView imageViewFoto;
-
     @FXML
     private TextField textFieldNombre;
     @FXML
@@ -164,7 +162,7 @@ public class PersonaDetalleViewController
         }
 
         // Recoger datos de pantalla
-        if (!errorFormato) { // Los datos introducidos son correctos
+        if (!errorFormato) {
             try {
                 int numFilaSeleccionada;
 
@@ -190,9 +188,7 @@ public class PersonaDetalleViewController
             } catch (Exception ex) {
                 //Los datos introducidos no cumplen requisitos
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setHeaderText("No se han podido guardar los cambios. "
-                        +
-                        "Compruebe que los datos cumplen los requisitos");
+                alert.setHeaderText("No se han podido guardar los cambios. " + "Compruebe que los datos cumplen los requisitos");
                 alert.setContentText(ex.getLocalizedMessage());
                 alert.showAndWait();
             }
@@ -271,7 +267,6 @@ public class PersonaDetalleViewController
                         }
                     }
                 });
-
             comboBoxProvincia.setConverter(new StringConverter<>(){
             @Override
             public String toString(Provincia provincia){
@@ -281,17 +276,14 @@ public class PersonaDetalleViewController
                     return provincia.getCodigo()+"-"+provincia.getNombre();
                 }
             }
-
             @Override
             public Provincia fromString(String string) {
                 return null;
             }
         });
-
         if (persona.getFoto() != null){
             String imageFileName=persona.getFoto();
             File file = new File(CARPETA_FOTOS+"/"+imageFileName);
-
             if (file.exists()){
                 Image image = new Image(file.toURI().toString());
                 imageViewFoto.setImage(image);
@@ -301,7 +293,6 @@ public class PersonaDetalleViewController
             }
         }
     }
-
     @FXML
     private void onActionButtonExaminar(ActionEvent event){
         File carpetaFotos = new File(CARPETA_FOTOS);
@@ -329,7 +320,6 @@ public class PersonaDetalleViewController
             }
         }
     }
-
     @FXML
     private void onActionSuprimirFoto(ActionEvent event) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -339,9 +329,8 @@ public class PersonaDetalleViewController
         ButtonType buttonTypeEliminar = new ButtonType("Suprimir");
         ButtonType buttonTypeMantener = new ButtonType("Mantener");
         ButtonType buttonTypeCancel = new ButtonType("Cancelar",
-                ButtonBar.ButtonData.CANCEL_CLOSE);
+        ButtonBar.ButtonData.CANCEL_CLOSE);
         alert.getButtonTypes().setAll(buttonTypeEliminar, buttonTypeMantener, buttonTypeCancel);
-
         Optional<ButtonType> result = alert.showAndWait();
 
         if (result.isPresent() && result.get() == buttonTypeEliminar) {

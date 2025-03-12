@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane fx:id="rootAdminView" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="es.ieslosmontecillos.AdminViewController">
+   <children>
+      <VBox alignment="TOP_CENTER" layoutX="20.0" prefHeight="400.0" prefWidth="543.0">
+         <children>
+            <Label id="lblTitulo" fx:id="lblTitulo" prefHeight="27.0" prefWidth="370.0" text="Administración de usuarios AppAgenda 24-25" textAlignment="CENTER">
+               <font>
+                  <Font size="18.0" />
+               </font>
+               <VBox.margin>
+                  <Insets bottom="5.0" />
+               </VBox.margin>
+            </Label>
+            <TableView prefHeight="200.0" prefWidth="586.0">
+              <columns>
+                <TableColumn prefWidth="41.19999694824219" text="id" />
+                <TableColumn prefWidth="258.0" text="Email" />
+                  <TableColumn minWidth="0.0" prefWidth="109.39999389648438" text="Password" />
+                  <TableColumn prefWidth="134.39998168945317" text="Vigencia" />
+              </columns>
+            </TableView>
+            <HBox alignment="TOP_CENTER" prefHeight="34.0" prefWidth="543.0">
+               <children>
+                  <Label fx:id="lblEmail" prefHeight="19.0" prefWidth="43.0" text="Email: ">
+                     <font>
+                        <Font size="13.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets top="5.0" />
+                     </HBox.margin>
+                  </Label>
+                  <TextField id="tfEmail" prefHeight="26.0" prefWidth="396.0">
+                     <HBox.margin>
+                        <Insets top="5.0" />
+                     </HBox.margin>
+                  </TextField>
+               </children>
+            </HBox>
+            <HBox alignment="TOP_CENTER" layoutX="10.0" layoutY="237.0" prefHeight="34.0" prefWidth="543.0">
+               <children>
+                  <Label fx:id="lblPassword" prefHeight="19.0" prefWidth="61.0" text="Password: ">
+                     <font>
+                        <Font size="13.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets top="5.0" />
+                     </HBox.margin>
+                  </Label>
+                  <PasswordField prefHeight="26.0" prefWidth="378.0" />
+               </children>
+            </HBox>
+            <HBox alignment="TOP_CENTER" layoutX="10.0" layoutY="272.0" prefHeight="34.0" prefWidth="543.0">
+               <children>
+                  <Button fx:id="btnGuardar" mnemonicParsing="false" onAction="#onActionBtnGuardar" text="Guardar">
+                     <HBox.margin>
+                        <Insets right="150.0" top="5.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Button fx:id="btnSalir" layoutX="256.0" layoutY="10.0" mnemonicParsing="false" onAction="#onActionBtnSalir" text="Salir">
+                     <HBox.margin>
+                        <Insets left="150.0" top="5.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

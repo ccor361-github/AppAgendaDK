@@ -7,6 +7,7 @@ import com.gluonhq.connect.provider.DataProvider;
 import com.gluonhq.connect.provider.RestClient;
 import es.ieslosmontecillos.entidades.Persona;
 import es.ieslosmontecillos.entidades.Provincia;
+import es.ieslosmontecillos.entidades.Usuario;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -23,11 +24,12 @@ import java.net.URL;
 
 public class DataUtil {
 
-    public static final String HOST = "http://localhost:8080";
-    public static final String PATH_API = "/api/v1/";
+    public static final String HOST = "http://192.168.100.22:8081";
+    public static final String PATH_API = "/api/usuario/usuarios/";
 
     private ObservableList<Provincia> olProvincias = FXCollections.observableArrayList();
     private ObservableList<Persona> olPersonas = FXCollections.observableArrayList();
+    private ObservableList<Usuario> olUsuarios = FXCollections.observableArrayList();
 
     public void obtenerTodasLasProvincias() {
         System.out.println("Se están solicitando las provincias...");
@@ -35,22 +37,18 @@ public class DataUtil {
         GluonObservableList<Provincia> provincias = DataProvider.retrieveList(restClient.createListDataReader(Provincia.class));
 
         provincias.addListener((ListChangeListener<Provincia>) c -> {
-
             if (c.next()) {
                 olProvincias.add(c.getList().get(c.getFrom()));
             }
         });
     }
-
     public ObservableList<Provincia> getOlProvincias() {
         return olProvincias;
     }
-
     public void obtenerTodasLasPersonas(){
         System.out.println("Se están solicitando las personas...");
         RestClient restClient = RestClient.create().method("GET").host(HOST).path(PATH_API + "PERSONA");
         GluonObservableList<Persona> personas = DataProvider.retrieveList(restClient.createListDataReader(Persona.class));
-
         personas.addListener((ListChangeListener<Persona>) c -> {
             if(c.next()){
                 olPersonas.add(c.getList().get(c.getFrom()));
@@ -97,7 +95,7 @@ public class DataUtil {
             jsonReader.close();
             return object.getInt("id");
         } catch (Exception e) {
-            e.printStackTrace(System.out);
+            System.out.println(e.getMessage());
             return 0;
         }
 
@@ -122,7 +120,6 @@ public class DataUtil {
         });
         return persona.get();
     }
-
     public Provincia findProvinciaByID(Integer id) {
         int idProvincia = id;
         RestClient restClient = RestClient.create().method("GET").host(HOST).path(PATH_API + "PROVINCIA/"+idProvincia);
@@ -133,5 +130,39 @@ public class DataUtil {
             }
         });
         return provincia.get();
+    }
+    public Usuario findUsuarioByID(Integer id) {
+        int idUsuario = id;
+        RestClient restClient = RestClient.create().method("GET").host(HOST).path(PATH_API + "USUARIO/");
+        GluonObservableObject<Usuario> usuario = DataProvider.retrieveObject(restClient.createObjectDataReader(Usuario.class));
+        usuario.initializedProperty().addListener((obs, ov, nv) -> {
+            if (nv && usuario.get() != null) {
+                System.out.println("Recuperando usuario seleccionado de la BD");
+            }
+        });
+        return usuario.get();
+    }
+    public void obtenerTodosLosUsuarios(){
+        System.out.println("Se están solicitando los usuarios...");
+        RestClient restClient = RestClient.create().method("GET").host(HOST).path(PATH_API + "USUARIO/");
+        GluonObservableList<Usuario> usuarios = DataProvider.retrieveList(restClient.createListDataReader(Usuario.class));
+        usuarios.addListener((ListChangeListener<Usuario>) c -> {
+            if(c.next()){
+                olUsuarios.add(c.getList().get(c.getFrom()));
+                System.out.println("Lista usuarios: " + olUsuarios.get(c.getFrom()).getId() + "-" + olUsuarios.get(c.getFrom()).getEmail() + "-" + olUsuarios.get(c.getFrom()).getVigencia());
+            }
+        });
+    }
+    public void actualizarUsuario(Usuario usuario){
+        int idUsuario = usuario.getId();
+        JsonConverter<Usuario> converter = new JsonConverter<>(Usuario.class);
+        JsonObject json = converter.writeToJson(usuario);
+        String dataBody = json.toString();
+        System.out.println(dataBody);
+        RestClient restClient = RestClient.create().method("PUT").host(HOST).path(PATH_API + "USUARIO/"+ idUsuario).dataString(dataBody).contentType("application/json");
+        GluonObservableObject<Usuario> usuarioActualizado = DataProvider.retrieveObject(restClient.createObjectDataReader(Usuario.class));
+    }
+    public ObservableList<Usuario> getOlUsuarios() {
+        return olUsuarios;
     }
 }

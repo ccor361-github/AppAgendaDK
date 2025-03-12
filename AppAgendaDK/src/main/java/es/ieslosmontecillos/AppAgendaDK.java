@@ -3,6 +3,7 @@ package es.ieslosmontecillos;
 import com.gluonhq.charm.glisten.mvc.View;
 import es.ieslosmontecillos.entidades.Persona;
 import es.ieslosmontecillos.entidades.Provincia;
+import es.ieslosmontecillos.entidades.Usuario;
 import javafx.application.Application;
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;
@@ -32,6 +33,8 @@ public class AppAgendaDK extends Application {
         ObservableList<Provincia> olProv = dataUtil.getOlProvincias();
         dataUtil.obtenerTodasLasPersonas();
         ObservableList<Persona> olPers = dataUtil.getOlPersonas();
+        dataUtil.obtenerTodosLosUsuarios();
+        ObservableList<Usuario> olUsers = dataUtil.getOlUsuarios();
 
         // Pasamos los datos obtenidos a la clase controladora de inicio
         inicioController.setDataUtil(dataUtil);
